@@ -16,8 +16,8 @@ function installPM2() {
 }
 function transferProjectToRemote(failed, successful) {
     return ssh.putDirectory(
-        '../Starter-Node-Angular',
-        '/home/ubuntu/Starter-Node-Angular-temp',
+        '../starter-node-angular',
+        '/home/ubuntu/starter-node-angular-temp',
         {
             recursive: true,
             concurrency: 1,
@@ -41,7 +41,7 @@ function transferProjectToRemote(failed, successful) {
 }
 function createRemoteTempFolder() {
     return ssh.execCommand(
-        'rm -rf Starter-Node-Angular-temp && mkdir Starter-Node-Angular-temp', {
+        'rm -rf starter-node-angular-temp && mkdir starter-node-angular-temp', {
         cwd: '/home/ubuntu'
     });
 }
@@ -53,20 +53,20 @@ function stopRemoteServices() {
 }
 function makeNewProject() {
     return ssh.execCommand(
-        'mkdir Starter-Node-Angular', {
+        'mkdir starter-node-angular', {
         cwd: '/home/ubuntu'
     });
 }
 function updateRemoteApp() {
     makeNewProject();
     return ssh.execCommand(
-        'cp -r Starter-Node-Angular-temp/* Starter-Node-Angular/ && rm -rf Starter-Node-Angular-temp', {
+        'cp -r starter-node-angular-temp/* starter-node-angular/ && rm -rf starter-node-angular-temp', {
         cwd: '/home/ubuntu'
     });
 }
 function restartRemoteServices() {
     return ssh.execCommand(
-        'cd Starter-Node-Angular && sudo service mongod start && pm2 start app.js', {
+        'cd starter-node-angular && sudo service mongod start && pm2 start app.js', {
         cwd: '/home/ubuntu'
     });
 }
@@ -84,7 +84,7 @@ function sshConnect() {
             return installPM2();
         })
         .then(function () {
-            console.log('Creating `Starter-Node-Angular-temp` folder.');
+            console.log('Creating `starter-node-angular-temp` folder.');
             return createRemoteTempFolder();
         })
         .then(function (result) {
